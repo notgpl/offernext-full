@@ -1,35 +1,34 @@
-import Link from "next/link";
-import { Geist, Geist_Mono } from "next/font/google";
+import React, { useState } from "react";
+import "./App.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+function App() {
+  const [authMode, setAuthMode] = useState("login");
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export default function Home() {
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} font-sans flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-8 gap-8`}
-    >
-      <h1 className="text-4xl font-bold">Welcome to Offernext</h1>
-      <p className="text-gray-400 text-lg">Get started by logging in or registering</p>
-      <div className="flex gap-4">
-        <Link href="/login">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg">
-            Login
+    <div className="container">
+      <div className="card">
+        <h2>{authMode === "login" ? "Login to Offernext" : "Create your Account"}</h2>
+
+        <form>
+          {authMode === "register" && (
+            <input type="text" placeholder="Full Name" className="input" />
+          )}
+          <input type="email" placeholder="Email Address" className="input" />
+          <input type="password" placeholder="Password" className="input" />
+
+          <button type="submit" className="btn-primary">
+            {authMode === "login" ? "Login" : "Register"}
           </button>
-        </Link>
-        <Link href="/register">
-          <button className="bg-gray-700 hover:bg-gray-800 text-white font-semibold px-6 py-2 rounded-lg">
-            Register
-          </button>
-        </Link>
+        </form>
+
+        <p onClick={() => setAuthMode(authMode === "login" ? "register" : "login")} className="toggle">
+          {authMode === "login"
+            ? "Don't have an account? Register"
+            : "Already have an account? Login"}
+        </p>
       </div>
     </div>
   );
 }
+
+export default App;
